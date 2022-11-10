@@ -1,4 +1,5 @@
 from structures.AVLNode import AVLNode
+from structures.Stack import Stack
 
 """
 AVL-дерево
@@ -16,6 +17,51 @@ def update_height(node):
     node.height = max(height(node.left), height(node.right)) + 1
 
 
+class AVLIterator:
+    def __init__(self, avlTree):
+        self.pos = 0
+        self.count = avlTree.count
+        self.stack = Stack()
+
+        self.currNode = avlTree.root
+        while self.currNode is not None:
+            self.stack.push(self.currNode)
+            self.currNode = self.currNode.left
+
+        if not self.stack.isEmpty():
+            self.currNode = self.stack.peek()
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        # print(f"self.currNode.key = {self.currNode.key}")
+
+        if self.pos == self.count:
+            raise StopIteration
+        if self.pos == 0:
+            self.pos += 1
+            return self.currNode.key
+
+        node = self.stack.pop()
+
+        if self.currNode.right is not None:
+            self.currNode = self.currNode.right
+            while self.currNode is not None:
+                self.stack.push(self.currNode)
+                self.currNode = self.currNode.left
+            self.currNode = self.stack.peek()
+        else:
+            if self.stack.size() == 0:
+                self.currNode = node.right
+            else:
+                self.currNode = self.stack.peek()
+
+        self.pos += 1
+
+        return self.currNode.key
+
+
 class AVLTree(object):
     """
     Реализация AVL-дерева.
@@ -24,6 +70,7 @@ class AVLTree(object):
     def __init__(self):
         """ Дерево пусто """
         self.root = None
+        self.count = 0
 
     def print(self):
         if self.root is None:
@@ -40,31 +87,6 @@ class AVLTree(object):
             Звено с ключом k или None, если не удалось найти.
         """
         return self.root and self.root.find(k)
-
-    def find_min(self):
-        """Возвращает звено с минимальным ключом в AVL-дереве."""
-        return self.root and self.root.find_min()
-
-    def next_larger(self, k):
-        """
-        Возвращает звено, содержащее наименее больший (следующий) ключ в AVL-дереве
-        по отношению ко звену с ключом k.
-
-        Принимает:
-            k: Ключ звена, для которого должно быть найдено следующее.
-
-        Возвращает: следующее
-        """
-        node = self.find(k)
-        return node and node.next_larger()
-
-    def prev_smaller(self, k):
-        """
-        Возвращает звено, содержащее наименее меньший (предыдущий) ключ в AVL-дереве
-        по отношению ко звену с ключом k.
-        """
-        node = self.find(k)
-        return node and node.prev_smaller()
 
     def left_rotate(self, x):
         y = x.right
@@ -148,6 +170,8 @@ class AVLTree(object):
             self.root.insert(node)
         self.rebalance(node)
 
+        self.count += 1
+
     def delete(self, k):
         """
         Удаляет и возвращает звено с ключом k, если оно существует в AVL-дереве.
@@ -184,3 +208,8 @@ class AVLTree(object):
         # поэтому он - первый потенциально несбалансированный узел.
         # Сбалансируем его.
         self.rebalance(deleted.parent)
+
+        self.count -= 1
+
+    def __iter__(self):
+        return AVLIterator(self)

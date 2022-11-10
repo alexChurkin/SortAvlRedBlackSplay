@@ -1,10 +1,23 @@
-def AvlSort(inList):
-    print("TODO")
+from structures.AVLTree import AVLTree
 
 
-def RedBlackSort(inList):
-    print("TODO")
+def avlSort(inputList: list) -> list:
+    tree = AVLTree()
+
+    for item in inputList:
+        tree.insert(item)
+
+    outputList = list()
+
+    for element in tree:
+        outputList.append(element)
+
+    return outputList
 
 
-def SplaySort(inList):
-    print("TODO")
+def redBlackSort(inputList: list) -> list:
+    print("\nTODO")
+
+
+def splaySort(inputList: list) -> list:
+    print("\nTODO")

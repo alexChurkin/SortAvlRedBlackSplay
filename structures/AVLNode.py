@@ -2,7 +2,8 @@ class AVLNode(object):
     """ Звено AVL-дерева."""
 
     def __init__(self, parent, k):
-        """Создаёт звено.
+        """
+        Создаёт звено.
 
         Принимает:
             parent: Родительское звено.
@@ -50,7 +51,7 @@ class AVLNode(object):
             else:
                 return self.right.find(k)
 
-    def find_min(self):
+    def findMin(self):
         """
         Находит звено с минимальным ключом в поддереве с корнем self.
 
@@ -61,39 +62,6 @@ class AVLNode(object):
         while current.left is not None:
             current = current.left
         return current
-
-    def find_max(self):
-        """
-        Находит звено с максимальным ключом в поддереве с корнем self.
-        """
-        current = self
-        while current.right is not None:
-            current = current.right
-        return current
-
-    def next_larger(self):
-        """
-        Находит в дереве звено с наименее большим (следующим) ключом.
-        В терминах задаче о пересекающихся отрезках это "НАД".
-        """
-        if self.right is not None:
-            return self.right.find_min()
-        current = self
-        while current.parent is not None and current is current.parent.right:
-            current = current.parent
-        return current.parent
-
-    def prev_smaller(self):
-        """
-        Находит в дереве звено с наименее меньшим (предыдущим) ключом.
-        В терминах задаче о пересекающихся отрезках это "ПОД".
-        """
-        if self.left is not None:
-            return self.left.find_max()
-        current = self
-        while current.parent is not None and current is current.parent.left:
-            current = current.parent
-        return current.parent
 
     def insert(self, node):
         """

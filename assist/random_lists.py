@@ -1,13 +1,18 @@
 import random
 
 
-def generateRandomList(size: int, minimum: float, maximum: float):
-    return [random.uniform(minimum, maximum) for _ in range(size)]
+def generateRandomList(size: int, minimum: int, maximum: int) -> list:
+    randList = [random.randint(minimum, maximum) for i in range(size)]
+    return randList
 
 
-def generateRandomListAsc(size: int, minimum: float, maximum: float):
-    return generateRandomList(size, minimum, maximum).sort()
+def generateRandomListAsc(size: int, minimum: int, maximum: int) -> list:
+    randList = generateRandomList(size, minimum, maximum)
+    randList.sort()
+    return randList
 
 
-def generateRandomListDesc(size: int, minimum: float, maximum: float):
-    return generateRandomList(size, minimum, maximum).sort(reverse=True)
+def generateRandomListDesc(size: int, minimum: int, maximum: int) -> list:
+    randList = generateRandomList(size, minimum, maximum)
+    randList.sort(reverse=True)
+    return randList
