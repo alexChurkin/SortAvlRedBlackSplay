@@ -1,11 +1,19 @@
+from time import time
+
 from structures.AVLTree import AVLTree
 
 
 def avlSort(inputList: list) -> list:
     tree = AVLTree()
 
+    _t1 = time()
+
     for item in inputList:
         tree.insert(item)
+
+    _t2 = time()
+
+    print(f"diff = {_t2 - _t1}")
 
     outputList = list()
 
