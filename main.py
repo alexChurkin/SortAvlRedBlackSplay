@@ -1,6 +1,7 @@
 import math
 
 from assist.advanced_input import readInt, readFloatList, readFloatRange
+from assist.random_lists import *
 from experiments import *
 
 RANDOM = 1
@@ -38,13 +39,23 @@ def runSingleExperiment(mode: int):
                               minimum=-float('inf'),
                               maximum=float('inf'), includeR=False, includeL=False)
 
+        inputList = None
+
+        if mode == RANDOM:
+            inputList = generateRandomList(size=n, minimum=q, maximum=w)
+        elif mode == RANDOM_ASC:
+            inputList = generateRandomListAsc(size=n, minimum=q, maximum=w)
+        else:
+            inputList = generateRandomListDesc(size=n, minimum=q, maximum=w)
+
+
+
 
     # >>> Выбран ручной способ задания массива
     else:
         inputList = readFloatList("Введите элементы массива:\n",
                                   minimum=1,
                                   maximum=10, includeR=False)
-
 
     t1Start = time.time()
     t1Finish = time.time()
