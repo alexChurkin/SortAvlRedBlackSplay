@@ -172,44 +172,5 @@ class AVLTree(object):
 
         self.count += 1
 
-    def delete(self, k):
-        """
-        Удаляет и возвращает звено с ключом k, если оно существует в AVL-дереве.
-        AVL-версия гарантирует сбалансированность: h = O(log N).
-
-        Принимает:
-            k: Ключ звена, которое необходимо удалить.
-
-        Возвращает:
-            Удалённое звено с ключом k.
-        """
-        # найдём удаляемое звено
-        node = self.find(k)
-        if node is None:
-            return None
-        if node is self.root:
-            # (оно является корнем)
-            # создадим псевдокорень с ключом 0
-            pseudoRoot = AVLNode(None, 0)
-            # прикрепим слева текущий корень
-            pseudoRoot.left = self.root
-            # назначим родителем текущего корня наш псевдокорень
-            self.root.parent = pseudoRoot
-            # запустим удаление текущего корня
-            deleted = self.root.delete()
-            # теперь корнем станет звено, на которое был сменён старый текущий корень
-            self.root = pseudoRoot.left
-            if self.root is not None:
-                self.root.parent = None
-        else:
-            # (оно не является корнем) -> удалим его стандартным delete у звена
-            deleted = node.delete()
-        # node.parent является старым родителем node,
-        # поэтому он - первый потенциально несбалансированный узел.
-        # Сбалансируем его.
-        self.rebalance(deleted.parent)
-
-        self.count -= 1
-
     def __iter__(self):
         return AVLIterator(self)

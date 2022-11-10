@@ -74,7 +74,7 @@ class AVLNode(object):
         if node is None:
             # Вставить звено некуда
             return
-        if node.key < self.key:
+        if node.key <= self.key:
             # Ключ вставляемого звена меньше текущего ключа
             if self.left is None:
                 # Слева пусто - можно присоединить новое звено
@@ -92,33 +92,3 @@ class AVLNode(object):
             else:
                 # Справа не пусто - идём вправо вниз и ищем место вставки дальше
                 self.right.insert(node)
-
-    def delete(self):
-        """Удаляет звено из дерева и возвращает его."""
-        if self.left is None or self.right is None:
-            # (если у self не более одного дочернего звена)
-
-            if self is self.parent.left:
-                # (self слева внизу от своего родителя)
-                # заменим удаляемое звено на его единственное дочернее (если оно есть)
-                self.parent.left = self.left or self.right
-                if self.parent.left is not None:
-                    # если оно было, для заменённого звена нужно исправить ссылку на родителя
-                    self.parent.left.parent = self.parent
-            else:
-                # (self справа внизу от своего родителя)
-                # заменим удаляемое звено на его единственное дочернее (если оно есть)
-                self.parent.right = self.left or self.right
-                if self.parent.right is not None:
-                    # если оно было, для заменённого звена нужно исправить ссылку на родителя
-                    self.parent.right.parent = self.parent
-            return self
-        else:
-            # (если у self есть оба дочерних звена)
-
-            # запустим поиск наименее большего (следующего)
-            s = self.next_larger()
-            # поменяем ключи текущего и наименее большего звеньев местами
-            self.key, s.key = s.key, self.key
-            # и запустим удаление уже для s
-            return s.delete()
