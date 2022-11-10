@@ -37,7 +37,64 @@ def readFloat(msg: str, minimum: float, maximum: float, includeL=True, includeR=
     return k
 
 
+def readFloatRange(msg: str, minimum: float, maximum: float, includeL=True, includeR=True):
+    a, b = None, None
+
+    while not (inRange(a, minimum, maximum, includeL, includeR) and
+               inRange(b, minimum, maximum, includeL, includeR) and
+               a < b):
+        print(msg, end='')
+
+        try:
+            inp = input().split(' ')
+            a, b = float(inp[0]), float(inp[1])
+            if not (inRange(a, minimum, maximum, includeL, includeR) and
+                    inRange(b, minimum, maximum, includeL, includeR) and
+                    a < b):
+                print(f"Некорректный ввод. Нужно ввести 2 числа (a < b) через пробел. Допустимый диапазон: "
+                      f"{strRange(minimum, maximum, includeL, includeR)}")
+        except Exception:
+            print(f"Некорректный ввод. Нужно ввести 2 числа через пробел. Допустимый диапазон: "
+                  f"{strRange(minimum, maximum, includeL, includeR)}")
+            a, b = None, None
+    return a, b
+
+
+def readFloatList(msg: str, minimum: float, maximum: float, includeL=True, includeR=True):
+    _list = list()
+
+    while not (len(_list) > 0 and
+               floatListElementsInRange(_list, minimum, maximum, includeL, includeR)):
+        try:
+            _unformatted = input(msg).split(' ')
+
+            if len(_unformatted) == 0:
+                print(
+                    f"Некорректный ввод. Нужно ввести числа через пробел. Допустимый диапазон: "
+                    f"{strRange(minimum, maximum, includeL, includeR)}")
+
+            _list = [float(elem) for elem in _unformatted]
+
+            if not floatListElementsInRange(_list, minimum, maximum, includeL, includeR):
+                print(
+                    f"Некорректный ввод. Нужно ввести числа через пробел. Допустимый диапазон: "
+                    f"{strRange(minimum, maximum, includeL, includeR)}")
+        except Exception:
+            print(
+                f"Некорректный ввод. Нужно ввести числа через пробел. Допустимый диапазон: "
+                f"{strRange(minimum, maximum, includeL, includeR)}")
+            _list.clear()
+    return _list
+
+
 """..................... Вспомогательные функции ....................."""
+
+
+def floatListElementsInRange(listt, minimum, maximum, includeL: bool, includeR: bool):
+    for element in listt:
+        if not inRange(element, minimum, maximum, includeL, includeR):
+            return False
+    return True
 
 
 def inRange(k, minimum, maximum, includeL: bool, includeR: bool):
