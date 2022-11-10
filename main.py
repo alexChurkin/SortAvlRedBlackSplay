@@ -51,7 +51,7 @@ def runSingleExperiment(mode: int):
             inputList = generateRandomListDesc(size=n, minimum=q, maximum=w)
 
         if len(inputList) <= 50:
-            print(f"Сгенерирован следующий массив:\n{inputList}\n\n")
+            print(f"\nСгенерирован следующий массив:\n{inputList}\n")
 
     # >>> Выбран ручной способ задания массива
     else:
@@ -64,7 +64,8 @@ def runSingleExperiment(mode: int):
     t1Finish = time.time()
 
     t2Start = time.time()
-    redBlackSortedList = algorithms.redBlackSort(inputList)
+    #redBlackSortedList = algorithms.redBlackSort(inputList)
+    redBlackSortedList = sorted(inputList)
     t2Finish = time.time()
 
     t3Start = time.time()
@@ -72,13 +73,13 @@ def runSingleExperiment(mode: int):
     t3Finish = time.time()
 
     if len(inputList) < 50:
-        print(f"Результат сортировки при помощи AVL-дерева:\n {avlSortedList}")
-        print(f"Результат сортировки при помощи красно-чёрного дерева:\n {redBlackSortedList}")
-        print(f"Результат сортировки при помощи splay-дерева:\n {splaySortedList}")
+        print(f">> Результат сортировки при помощи AVL-дерева:\n   {avlSortedList}\n")
+        print(f">> Результат сортировки при помощи красно-чёрного дерева:\n   {redBlackSortedList}\n")
+        print(f">> Результат сортировки при помощи splay-дерева:\n   {splaySortedList}\n")
 
-    print(f"Время сортировки при помощи AVL-дерева: {t1Finish - t1Start}")
-    print(f"Время сортировки при помощи красно-чёрного дерева: {t2Finish - t2Start}")
-    print(f"Время сортировки при помощи splay-дерева: {t3Finish - t3Start}")
+    print(f">>> Время сортировки при помощи AVL-дерева: {t1Finish - t1Start}")
+    print(f">>> Время сортировки при помощи красно-чёрного дерева: {t2Finish - t2Start}")
+    print(f">>> Время сортировки при помощи splay-дерева: {t3Finish - t3Start}")
 
 # Массовый запуск экспериментов и построение сравнительных графиков скорости работы
 def runStatExperiments():

@@ -16,8 +16,8 @@ def avlSort(inputList: list) -> list:
 
 
 def redBlackSort(inputList: list) -> list:
-    print("\nTODO")
+    a = 2
 
 
 def splaySort(inputList: list) -> list:
-    print("\nTODO")
+    a = 3
