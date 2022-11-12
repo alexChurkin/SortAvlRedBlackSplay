@@ -27,6 +27,8 @@ class RBIterator:
         if not self.stack.isEmpty():
             self.currNode = self.stack.peek()
 
+        self.currNode = self.getNextNode()
+
     def __iter__(self):
         return self
 
@@ -97,7 +99,7 @@ class RBTree:
         new_node.parent = parent
         if parent is None:
             self.root = new_node
-        elif new_node.key < parent.key:
+        elif new_node.key <= parent.key:
             parent.left = new_node
         else:
             parent.right = new_node
@@ -211,7 +213,7 @@ def get_nums(num):
 def main():
     tree = RBTree()
     for x in range(1, 51):
-        tree.insert(x)
+        tree.insert(random.randint(1, 49))
     print(tree)
 
 
