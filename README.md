@@ -50,9 +50,7 @@
     - [Просто о поворотах](https://translated.turbopages.org/proxy_u/en-ru.ru.1bd900c1-633c4683-b5fcc6e4-74722d776562/https/www.freecodecamp.org/news/avl-tree-insertion-rotation-and-balance-factor/)
 
 - Красно-чёрное дерево:
-    - 123
-    - 456
-    - 789
+    - https://blog.boot.dev/python/red-black-tree-python/
 - Splay-дерево:
     - 123
     - 456
