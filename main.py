@@ -1,8 +1,6 @@
 import math
 
-import algorithms
 from assist.advanced_io import readInt, readFloatList, readFloatRange, listToStr
-from assist.randint_lists import *
 from experiments import *
 
 RANDOM = 1
@@ -74,9 +72,9 @@ def runSingleExperiment(mode: int):
     # Проверка, что результаты всех трёх сортировок идентичны
     for i in range(1, len(avlSortedList)):
         if avlSortedList[i] != redBlackSortedList[i]:
-            raise "Incorrect sorting"
+            raise "Сортировка некорректна"
         elif avlSortedList[i] != splaySortedList[i]:
-            raise "Incorrect sorting (2)"
+            raise "Сортировка некорректна (2)"
 
     print(f">> Результаты сортировки:")
     print(f"   ---------------------")
@@ -87,14 +85,19 @@ def runSingleExperiment(mode: int):
     print(f">> Время сортировки:")
     print(f"   ----------------")
     print(f"   - При помощи AVL-дерева: {t1Finish - t1Start}")
-    print(f"   - При помощи Красно-чёрного дерева: {t2Finish - t2Start}")
     print(f"   - При помощи Splay-дерева: {t3Finish - t3Start}")
+    print(f"   - При помощи Красно-чёрного дерева: {t2Finish - t2Start}")
 
 
 # Массовый запуск экспериментов и построение сравнительных графиков скорости работы
 def runStatExperiments():
-    runExperiment1()
-    runExperiment2()
+    runExperiment1(mode=RANDOM)
+    runExperiment1(mode=RANDOM_ASC)
+    runExperiment1(mode=RANDOM_DESC)
+
+    runExperiment2(mode=RANDOM)
+    runExperiment2(mode=RANDOM_ASC)
+    runExperiment2(mode=RANDOM_DESC)
 
 
 def main():
