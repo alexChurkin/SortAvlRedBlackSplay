@@ -2,7 +2,7 @@ import math
 
 import algorithms
 from assist.advanced_input import readInt, readFloatList, readFloatRange
-from assist.random_lists import *
+from assist.randint_lists import *
 from experiments import *
 
 RANDOM = 1
@@ -59,20 +59,19 @@ def runSingleExperiment(mode: int):
                                   minimum=1,
                                   maximum=10, includeR=False)
 
-    t1Start = time.time()
+    t1Start = time()
     avlSortedList = algorithms.avlSort(inputList)
-    t1Finish = time.time()
+    t1Finish = time()
 
-    t2Start = time.time()
-    #redBlackSortedList = algorithms.redBlackSort(inputList)
-    redBlackSortedList = sorted(inputList)
-    t2Finish = time.time()
+    t2Start = time()
+    redBlackSortedList = algorithms.redBlackSort(inputList)
+    t2Finish = time()
 
-    t3Start = time.time()
+    t3Start = time()
     splaySortedList = algorithms.splaySort(inputList)
-    t3Finish = time.time()
+    t3Finish = time()
 
-    if len(inputList) < 50:
+    if len(inputList) <= 50:
         print(f">> Результат сортировки при помощи AVL-дерева:\n   {avlSortedList}\n")
         print(f">> Результат сортировки при помощи красно-чёрного дерева:\n   {redBlackSortedList}\n")
         print(f">> Результат сортировки при помощи splay-дерева:\n   {splaySortedList}\n")
@@ -80,6 +79,7 @@ def runSingleExperiment(mode: int):
     print(f">>> Время сортировки при помощи AVL-дерева: {t1Finish - t1Start}")
     print(f">>> Время сортировки при помощи красно-чёрного дерева: {t2Finish - t2Start}")
     print(f">>> Время сортировки при помощи splay-дерева: {t3Finish - t3Start}")
+
 
 # Массовый запуск экспериментов и построение сравнительных графиков скорости работы
 def runStatExperiments():

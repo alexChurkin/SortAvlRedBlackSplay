@@ -1,6 +1,5 @@
-import time
-
-from assist.advanced_drawing import drawPlot, showPlot, usePlotLegend
+import random
+from time import time
 
 
 def runExperiment1():
@@ -41,3 +40,4 @@ def runExperiment1():
 
 def runExperiment2():
     print("TODO")
+
