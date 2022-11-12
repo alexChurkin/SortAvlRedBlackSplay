@@ -20,7 +20,7 @@ class RBIterator:
 
         self.currNode = tree.root
 
-        while self.currNode.left is not None and self.currNode.key != 0:
+        while self.currNode is not None:
             self.stack.push(self.currNode)
             self.currNode = self.currNode.left
 
@@ -88,12 +88,10 @@ class RBTree:
         current = self.root
         while current != self.nil:
             parent = current
-            if new_node.key < current.key:
+            if new_node.key <= current.key:
                 current = current.left
-            elif new_node.key > current.key:
-                current = current.right
             else:
-                return
+                current = current.right
 
         # Set the parent and insert the new node
         new_node.parent = parent
