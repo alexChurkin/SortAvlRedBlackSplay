@@ -87,6 +87,27 @@ def readFloatList(msg: str, minimum: float, maximum: float, includeL=True, inclu
     return _list
 
 
+def listToStr(_list):
+    result = ""
+
+    if len(_list) <= 40:
+        result += ''.join(str(_list))
+    else:
+        result += '['
+
+        for i in range(15):
+            result += str(_list[i])
+            result += ', '
+        result += '... , '
+
+        for i in range(9):
+            result += str(_list[len(_list) - 1 - i]) + ', '
+
+        result += str(_list[len(_list) - 1]) + ']'
+
+    return result
+
+
 """..................... Вспомогательные функции ....................."""
 
 

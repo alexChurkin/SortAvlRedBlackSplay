@@ -1,7 +1,7 @@
 import math
 
 import algorithms
-from assist.advanced_input import readInt, readFloatList, readFloatRange
+from assist.advanced_io import readInt, readFloatList, readFloatRange, listToStr
 from assist.randint_lists import *
 from experiments import *
 
@@ -71,10 +71,9 @@ def runSingleExperiment(mode: int):
     splaySortedList = algorithms.splaySort(inputList)
     t3Finish = time()
 
-    if len(inputList) <= 50:
-        print(f">> Результат сортировки при помощи AVL-дерева:\n   {avlSortedList}\n")
-        print(f">> Результат сортировки при помощи красно-чёрного дерева:\n   {redBlackSortedList}\n")
-        print(f">> Результат сортировки при помощи splay-дерева:\n   {splaySortedList}\n")
+    print(f">> Результат сортировки при помощи AVL-дерева:\n   {listToStr(avlSortedList)}\n")
+    print(f">> Результат сортировки при помощи красно-чёрного дерева:\n   {listToStr(redBlackSortedList)}\n")
+    print(f">> Результат сортировки при помощи splay-дерева:\n   {splaySortedList}\n")
 
     print(f">>> Время сортировки при помощи AVL-дерева: {t1Finish - t1Start}")
     print(f">>> Время сортировки при помощи красно-чёрного дерева: {t2Finish - t2Start}")
