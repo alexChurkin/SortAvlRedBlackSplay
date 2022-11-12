@@ -71,14 +71,24 @@ def runSingleExperiment(mode: int):
     splaySortedList = algorithms.splaySort(inputList)
     t3Finish = time()
 
-    print(f">> Результат сортировки при помощи AVL-дерева:\n   {listToStr(avlSortedList)}\n")
-    print(f">> Результат сортировки при помощи Красно-чёрного дерева:\n   {listToStr(redBlackSortedList)}\n")
-    print(f">> Результат сортировки при помощи Splay-дерева:\n   {listToStr(splaySortedList)}\n")
+    # Проверка, что результаты всех трёх сортировок идентичны
+    for i in range(1, len(avlSortedList)):
+        if avlSortedList[i] != redBlackSortedList[i]:
+            raise "Incorrect sorting"
+        elif avlSortedList[i] != splaySortedList[i]:
+            raise "Incorrect sorting (2)"
 
-    print(f">>> Время:")
-    print(f"    При помощи AVL-дерева: {t1Finish - t1Start}")
-    print(f"    При помощи Красно-чёрного дерева: {t2Finish - t2Start}")
-    print(f"    При помощи Splay-дерева: {t3Finish - t3Start}")
+    print(f">> Результаты сортировки:")
+    print(f"   ---------------------")
+    print(f"   - При помощи AVL-дерева:            {listToStr(avlSortedList)}")
+    print(f"   - При помощи Красно-чёрного дерева: {listToStr(redBlackSortedList)}")
+    print(f"   - При помощи Splay-дерева:          {listToStr(splaySortedList)}\n")
+
+    print(f">> Время сортировки:")
+    print(f"   ----------------")
+    print(f"   - При помощи AVL-дерева: {t1Finish - t1Start}")
+    print(f"   - При помощи Красно-чёрного дерева: {t2Finish - t2Start}")
+    print(f"   - При помощи Splay-дерева: {t3Finish - t3Start}")
 
 
 # Массовый запуск экспериментов и построение сравнительных графиков скорости работы
