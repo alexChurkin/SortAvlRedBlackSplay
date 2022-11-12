@@ -72,12 +72,13 @@ def runSingleExperiment(mode: int):
     t3Finish = time()
 
     print(f">> Результат сортировки при помощи AVL-дерева:\n   {listToStr(avlSortedList)}\n")
-    print(f">> Результат сортировки при помощи красно-чёрного дерева:\n   {listToStr(redBlackSortedList)}\n")
-    print(f">> Результат сортировки при помощи splay-дерева:\n   {splaySortedList}\n")
+    print(f">> Результат сортировки при помощи Красно-чёрного дерева:\n   {listToStr(redBlackSortedList)}\n")
+    print(f">> Результат сортировки при помощи Splay-дерева:\n   {listToStr(splaySortedList)}\n")
 
-    print(f">>> Время сортировки при помощи AVL-дерева: {t1Finish - t1Start}")
-    print(f">>> Время сортировки при помощи красно-чёрного дерева: {t2Finish - t2Start}")
-    print(f">>> Время сортировки при помощи splay-дерева: {t3Finish - t3Start}")
+    print(f">>> Время:")
+    print(f"    При помощи AVL-дерева: {t1Finish - t1Start}")
+    print(f"    При помощи Красно-чёрного дерева: {t2Finish - t2Start}")
+    print(f"    При помощи Splay-дерева: {t3Finish - t3Start}")
 
 
 # Массовый запуск экспериментов и построение сравнительных графиков скорости работы

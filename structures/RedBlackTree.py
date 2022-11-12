@@ -1,5 +1,3 @@
-import random
-
 from structures.Stack import Stack
 
 
@@ -187,34 +185,3 @@ class RBTree:
 
     def __iter__(self):
         return RBIterator(self)
-
-    def __repr__(self):
-        lines = []
-        print_tree(self.root, lines)
-        return '\n'.join(lines)
-
-
-def print_tree(node, lines, level=0):
-    if node.key != 0:
-        print_tree(node.left, lines, level + 1)
-        lines.append('-' * 4 * level + '> ' +
-                     str(node.key) + ' ' + ('r' if node.red else 'b'))
-        print_tree(node.right, lines, level + 1)
-
-
-def get_nums(num):
-    random.seed(1)
-    nums = []
-    for _ in range(num):
-        nums.append(random.randint(1, num - 1))
-    return nums
-
-
-def main():
-    tree = RBTree()
-    for x in range(1, 51):
-        tree.insert(random.randint(1, 49))
-    print(tree)
-
-
-main()
