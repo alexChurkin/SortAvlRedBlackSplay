@@ -1,5 +1,5 @@
 from structures.AVLTree import AVLTree
-from structures.RedBlackTree import RBTree
+from structures.RedBlackTree import RedBlackTree
 from structures.SplayTree import SplayTree
 
 
@@ -13,7 +13,7 @@ def avlSort(inputList: list) -> list:
 
 
 def redBlackSort(inputList: list) -> list:
-    tree = RBTree()
+    tree = RedBlackTree()
 
     for item in inputList:
         tree.insert(item)

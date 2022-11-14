@@ -1,8 +1,6 @@
 from structures.Stack import Stack
 
-"""
-AVL-дерево
-"""
+""" AVL-дерево """
 
 
 def height(node):
@@ -33,9 +31,9 @@ class AVLNode(object):
         self.right = None
 
     def print(self):
-        self._printRec(self)
+        self.__printRec(self)
 
-    def _printRec(self, root, tabCount=0):
+    def __printRec(self, root, tabCount=0):
         if root is None:
             return
 
@@ -43,31 +41,8 @@ class AVLNode(object):
             print("  ", end='')
 
         print(root.key, tabCount)
-        self._printRec(root.left, tabCount + 1)
-        self._printRec(root.right, tabCount + 1)
-
-    def find(self, k):
-        """
-        Находит звено с ключом k в поддереве с корнем self.
-
-        Принимает:
-            k: Ключ звена, которое мы хотим отыскать.
-
-        Возвращает:
-            Звено с ключом k.
-        """
-        if k == self.key:
-            return self
-        elif k < self.key:
-            if self.left is None:
-                return None
-            else:
-                return self.left.find(k)
-        else:
-            if self.right is None:
-                return None
-            else:
-                return self.right.find(k)
+        self.__printRec(root.left, tabCount + 1)
+        self.__printRec(root.right, tabCount + 1)
 
     def insert(self, node):
         """
@@ -156,17 +131,6 @@ class AVLTree(object):
         if self.root is None:
             return
         self.root.print()
-
-    def find(self, k):
-        """
-        Находит и возвращает звено с ключом k в поддереве с корнем self.
-
-        Принимает:
-            k: Ключ звена, которое нужно найти.
-        Возвращает:
-            Звено с ключом k или None, если не удалось найти.
-        """
-        return self.root and self.root.find(k)
 
     def left_rotate(self, x):
         y = x.right

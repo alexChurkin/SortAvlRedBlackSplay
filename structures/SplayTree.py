@@ -1,9 +1,11 @@
-import sys
-
 from structures.AVLTree import AVLIterator
 
+""" Splay-дерево """
 
-class Node:
+
+class SplayNode(object):
+    """ Звено Splay-дерева."""
+
     def __init__(self, key):
         self.key = key
         self.parent = None
@@ -11,72 +13,16 @@ class Node:
         self.right = None
 
 
+class SplayIterator(AVLIterator):
+    def __init__(self, avlTree):
+        super().__init__(avlTree)
+
+
 class SplayTree:
     def __init__(self):
         self.root = None
         self.count = 0
 
-    def __print_helper(self, currPtr, indent, last):
-        # print the tree structure on the screen
-        if currPtr is not None:
-            sys.stdout.write(indent)
-            if last:
-                sys.stdout.write("R----")
-                indent += "     "
-            else:
-                sys.stdout.write("L----")
-                indent += "|    "
-
-            print(currPtr.key)
-
-            self.__print_helper(currPtr.left, indent, False)
-            self.__print_helper(currPtr.right, indent, True)
-
-    def __search_tree_helper(self, node, key):
-        if node is None or key == node.key:
-            return node
-
-        if key <= node.key:
-            return self.__search_tree_helper(node.left, key)
-        return self.__search_tree_helper(node.right, key)
-
-    def __delete_node_helper(self, node, key):
-        x = None
-        t = None
-        s = None
-        while node is not None:
-            if node.key == key:
-                x = node
-
-            if node.key <= key:
-                node = node.right
-            else:
-                node = node.left
-
-        if x is None:
-            print("Couldn't find key in the tree")
-            return
-
-        # split operation
-        self.__splay(x)
-        if x.right is not None:
-            t = x.right
-            t.parent = None
-        else:
-            t = None
-
-        s = x
-        s.right = None
-        x = None
-
-        # join operation
-        if s.left is not None:
-            s.left.parent = None
-
-        self.root = self.__join(s.left, t)
-        s = None
-
-    # rotate left at node x
     def __left_rotate(self, x):
         y = x.right
         x.right = y.left
@@ -93,7 +39,6 @@ class SplayTree:
         y.left = x
         x.parent = y
 
-    # rotate right at node x
     def __right_rotate(self, x):
         y = x.left
         x.left = y.right
@@ -111,8 +56,10 @@ class SplayTree:
         y.right = x
         x.parent = y
 
-    # Splaying operation. It moves x to the root of the tree
     def __splay(self, x):
+        """
+        Операция "Splay". Перемещает x в корень дерева
+        """
         while x.parent is not None:
             if x.parent.parent is None:
                 if x == x.parent.left:
@@ -138,105 +85,14 @@ class SplayTree:
                 self.__right_rotate(x.parent)
                 self.__left_rotate(x.parent)
 
-    # joins two trees s and t
-    def __join(self, s, t):
-        if s is None:
-            return t
-
-        if t is None:
-            return s
-
-        x = self.maximum(s)
-        self.__splay(x)
-        x.right = t
-        t.parent = x
-        return x
-
-    def __pre_order_helper(self, node):
-        if node is not None:
-            sys.stdout.write(node.key + " ")
-            self.__pre_order_helper(node.left)
-            self.__pre_order_helper(node.right)
-
-    def __in_order_helper(self, node):
-        if node is not None:
-            self.__in_order_helper(node.left)
-            sys.stdout.write(node.key + " ")
-            self.__in_order_helper(node.right)
-
-    def __post_order_helper(self, node):
-        if node is not None:
-            self.__post_order_helper(node.left)
-            self.__post_order_helper(node.right)
-            sys.std.out.write(node.key + " ")
-
-    # Pre-Order traversal
-    # Node->Left Subtree->Right Subtree
-    def preorder(self):
-        self.__pre_order_helper(self.root)
-
-    # In-Order traversal
-    # Left Subtree -> Node -> Right Subtree
-    def inorder(self):
-        self.__in_order_helper(self.root)
-
-    # Post-Order traversal
-    # Left Subtree -> Right Subtree -> Node
-    def postorder(self):
-        self.__post_order_helper(self.root)
-
-    # search the tree for the key k
-    # and return the corresponding node
-    def search_tree(self, k):
-        x = self.__search_tree_helper(self.root, k)
-        if x is not None:
-            self.__splay(x)
-
-    # find the node with the minimum key
-    def minimum(self, node):
-        while node.left is not None:
-            node = node.left
-        return node
-
-    # find the node with the maximum key
-    def maximum(self, node):
-        while node.right is not None:
-            node = node.right
-        return node
-
-    # find the successor of a given node
-    def successor(self, x):
-        # if the right subtree is not null,
-        # the successor is the leftmost node in the
-        # right subtree
-        if x.right is not None:
-            return self.minimum(x.right)
-
-        # else it is the lowest ancestor of x whose
-        # left child is also an ancestor of x.
-        y = x.parent
-        while y is not None and x == y.right:
-            x = y
-            y = y.parent
-        return y
-
-    # find the predecessor of a given node
-    def predecessor(self, x):
-        # if the left subtree is not null,
-        # the predecessor is the rightmost node in the
-        # left subtree
-        if x.left is not None:
-            return self.maximum(x.left)
-
-        y = x.parent
-        while y is not None and x == y.left:
-            x = y
-            y = y.parent
-        return y
-
-    # insert the key to the tree in its appropriate position
     def insert(self, key):
-        node = Node(key)
+        """
+        Производит вставку звена с ключом k в дерево.
+
+        Принимает:
+            key: Ключ звена, которое необходимо вставить.
+        """
+        node = SplayNode(key)
         y = None
         x = self.root
 
@@ -259,39 +115,5 @@ class SplayTree:
         self.__splay(node)
         self.count += 1
 
-    # delete the node from the tree
-    def delete_node(self, key):
-        self.__delete_node_helper(self.root, key)
-
-    # print the tree structure on the screen
-    def pretty_print(self):
-        self.__print_helper(self.root, "", True)
-
     def __iter__(self):
-        return AVLIterator(self)
-
-
-if __name__ == '__main__':
-    tree = SplayTree()
-    tree.insert(33)
-    tree.insert(44)
-    tree.insert(67)
-    tree.insert(5)
-    tree.insert(89)
-    tree.insert(41)
-    tree.insert(98)
-    tree.insert(1)
-    tree.pretty_print()
-    tree.search_tree(33)
-    tree.search_tree(44)
-    tree.pretty_print()
-    tree.delete_node(89)
-    tree.delete_node(67)
-    tree.delete_node(41)
-    tree.delete_node(5)
-    tree.pretty_print()
-    tree.delete_node(98)
-    tree.delete_node(1)
-    tree.delete_node(44)
-    tree.delete_node(33)
-    tree.pretty_print()
+        return SplayIterator(self)

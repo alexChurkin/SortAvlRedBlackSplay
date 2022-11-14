@@ -1,16 +1,16 @@
 from structures.Stack import Stack
 
 
-class RBNode:
+class RBNode(object):
     def __init__(self, key):
-        self.red = False
-        self.parent = None
         self.key = key
+        self.parent = None
         self.left = None
         self.right = None
+        self.red = False
 
 
-class RBIterator:
+class RedBlackIterator:
     def __init__(self, tree):
         self.pos = 0
         self.count = tree.count
@@ -67,7 +67,7 @@ class RBIterator:
         return self.currNode.key
 
 
-class RBTree:
+class RedBlackTree:
     def __init__(self):
         self.nil = RBNode(0)
         self.nil.red = False
@@ -78,36 +78,36 @@ class RBTree:
 
     def insert(self, key):
         # Ordinary Binary Search Insertion
-        new_node = RBNode(key)
-        new_node.parent = None
-        new_node.left = self.nil
-        new_node.right = self.nil
-        new_node.red = True  # new node must be red
+        newNode = RBNode(key)
+        newNode.parent = None
+        newNode.left = self.nil
+        newNode.right = self.nil
+        newNode.red = True  # new node must be red
 
         parent = None
         current = self.root
         while current != self.nil:
             parent = current
-            if new_node.key <= current.key:
+            if newNode.key <= current.key:
                 current = current.left
             else:
                 current = current.right
 
         # Set the parent and insert the new node
-        new_node.parent = parent
+        newNode.parent = parent
         if parent is None:
-            self.root = new_node
-        elif new_node.key <= parent.key:
-            parent.left = new_node
+            self.root = newNode
+        elif newNode.key <= parent.key:
+            parent.left = newNode
         else:
-            parent.right = new_node
+            parent.right = newNode
 
         # Fix the tree
-        self.fix_insert(new_node)
+        self.fixInsert(newNode)
 
         self.count += 1
 
-    def fix_insert(self, new_node):
+    def fixInsert(self, new_node):
         while new_node != self.root and new_node.parent.red:
             if new_node.parent == new_node.parent.parent.right:
                 u = new_node.parent.parent.left  # uncle
@@ -119,10 +119,10 @@ class RBTree:
                 else:
                     if new_node == new_node.parent.left:
                         new_node = new_node.parent
-                        self.rotate_right(new_node)
+                        self.right_rotate(new_node)
                     new_node.parent.red = False
                     new_node.parent.parent.red = True
-                    self.rotate_left(new_node.parent.parent)
+                    self.left_rotate(new_node.parent.parent)
             else:
                 u = new_node.parent.parent.right  # uncle
 
@@ -134,30 +134,20 @@ class RBTree:
                 else:
                     if new_node == new_node.parent.right:
                         new_node = new_node.parent
-                        self.rotate_left(new_node)
+                        self.left_rotate(new_node)
                     new_node.parent.red = False
                     new_node.parent.parent.red = True
-                    self.rotate_right(new_node.parent.parent)
+                    self.right_rotate(new_node.parent.parent)
         self.root.red = False
 
-    def exists(self, key):
-        curr = self.root
-        while curr != self.nil and key != curr.key:
-            if key < curr.key:
-                curr = curr.left
-            else:
-                curr = curr.right
-        return curr
-
-    # rotate left at node x
-    def rotate_left(self, x):
+    def left_rotate(self, x):
         y = x.right
         x.right = y.left
         if y.left != self.nil:
             y.left.parent = x
 
         y.parent = x.parent
-        if x.parent == None:
+        if x.parent is None:
             self.root = y
         elif x == x.parent.left:
             x.parent.left = y
@@ -166,15 +156,14 @@ class RBTree:
         y.left = x
         x.parent = y
 
-    # rotate right at node x
-    def rotate_right(self, x):
+    def right_rotate(self, x):
         y = x.left
         x.left = y.right
         if y.right != self.nil:
             y.right.parent = x
 
         y.parent = x.parent
-        if x.parent == None:
+        if x.parent is None:
             self.root = y
         elif x == x.parent.right:
             x.parent.right = y
@@ -184,4 +173,4 @@ class RBTree:
         x.parent = y
 
     def __iter__(self):
-        return RBIterator(self)
+        return RedBlackIterator(self)
