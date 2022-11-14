@@ -63,25 +63,25 @@ class SplayTree:
         while x.parent is not None:
             if x.parent.parent is None:
                 if x == x.parent.left:
-                    # zig rotation
+                    # zig-поворот
                     self.__right_rotate(x.parent)
                 else:
-                    # zag rotation
+                    # zag-поворот
                     self.__left_rotate(x.parent)
             elif x == x.parent.left and x.parent == x.parent.parent.left:
-                # zig-zig rotation
+                # zig-zig-поворот
                 self.__right_rotate(x.parent.parent)
                 self.__right_rotate(x.parent)
             elif x == x.parent.right and x.parent == x.parent.parent.right:
-                # zag-zag rotation
+                # zag-zag-поворот
                 self.__left_rotate(x.parent.parent)
                 self.__left_rotate(x.parent)
             elif x == x.parent.right and x.parent == x.parent.parent.left:
-                # zig-zag rotation
+                # zig-zag-поворот
                 self.__left_rotate(x.parent)
                 self.__right_rotate(x.parent)
             else:
-                # zag-zig rotation
+                # zag-zig-поворот
                 self.__right_rotate(x.parent)
                 self.__left_rotate(x.parent)
 
@@ -103,7 +103,7 @@ class SplayTree:
             else:
                 x = x.right
 
-        # y is parent of x
+        # y - родитель x
         node.parent = y
         if y is None:
             self.root = node
@@ -111,7 +111,7 @@ class SplayTree:
             y.left = node
         else:
             y.right = node
-        # splay the node
+        # Проведём операцию "splay" для нового звена node
         self.__splay(node)
         self.count += 1
 

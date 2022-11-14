@@ -45,7 +45,7 @@ class RedBlackIterator:
             else:
                 self.currNode = self.stack.peek()
 
-        if self.currNode.key == 0:
+        if self.currNode.key is None:
             return None
         else:
             return self.currNode
@@ -69,7 +69,7 @@ class RedBlackIterator:
 
 class RedBlackTree:
     def __init__(self):
-        self.nil = RBNode(0)
+        self.nil = RBNode(None)
         self.nil.red = False
         self.nil.left = None
         self.nil.right = None
@@ -77,12 +77,13 @@ class RedBlackTree:
         self.count = 0
 
     def insert(self, key):
-        # Ordinary Binary Search Insertion
+        # Обычная вставка
         newNode = RBNode(key)
         newNode.parent = None
         newNode.left = self.nil
         newNode.right = self.nil
-        newNode.red = True  # new node must be red
+        # Новое звено должно быть красным
+        newNode.red = True
 
         parent = None
         current = self.root
@@ -93,7 +94,7 @@ class RedBlackTree:
             else:
                 current = current.right
 
-        # Set the parent and insert the new node
+        # Установка parent и вставка звена
         newNode.parent = parent
         if parent is None:
             self.root = newNode
@@ -102,15 +103,15 @@ class RedBlackTree:
         else:
             parent.right = newNode
 
-        # Fix the tree
-        self.fixInsert(newNode)
+        # Исправление дерева
+        self.fix_insert(newNode)
 
         self.count += 1
 
-    def fixInsert(self, new_node):
+    def fix_insert(self, new_node):
         while new_node != self.root and new_node.parent.red:
             if new_node.parent == new_node.parent.parent.right:
-                u = new_node.parent.parent.left  # uncle
+                u = new_node.parent.parent.left  # "дядя"
                 if u.red:
                     u.red = False
                     new_node.parent.red = False
@@ -124,7 +125,7 @@ class RedBlackTree:
                     new_node.parent.parent.red = True
                     self.left_rotate(new_node.parent.parent)
             else:
-                u = new_node.parent.parent.right  # uncle
+                u = new_node.parent.parent.right  # "дядя"
 
                 if u.red:
                     u.red = False
