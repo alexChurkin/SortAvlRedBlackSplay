@@ -12,6 +12,20 @@ class SplayNode(object):
         self.left = None
         self.right = None
 
+    def print(self):
+        self.__printRec(self)
+
+    def __printRec(self, root, tabCount=0):
+        if root is None:
+            return
+
+        for i in range(0, tabCount):
+            print("  ", end='')
+
+        print(root.key, tabCount)
+        self.__printRec(root.left, tabCount + 1)
+        self.__printRec(root.right, tabCount + 1)
+
 
 class SplayIterator(AVLIterator):
     def __init__(self, avlTree):
@@ -22,6 +36,11 @@ class SplayTree:
     def __init__(self):
         self.root = None
         self.count = 0
+
+    def print(self):
+        if self.root is None:
+            return
+        self.root.print()
 
     def __left_rotate(self, x):
         y = x.right
