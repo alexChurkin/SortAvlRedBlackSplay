@@ -9,6 +9,20 @@ class RBNode(object):
         self.right = None
         self.red = False
 
+    def print(self):
+        self.__printRec(self)
+
+    def __printRec(self, root, tabCount=0):
+        if root is None:
+            return
+
+        for i in range(0, tabCount):
+            print("  ", end='')
+
+        print(root.key, tabCount)
+        self.__printRec(root.left, tabCount + 1)
+        self.__printRec(root.right, tabCount + 1)
+
 
 class RedBlackIterator:
     def __init__(self, tree):
@@ -75,6 +89,11 @@ class RedBlackTree:
         self.nil.right = None
         self.root = self.nil
         self.count = 0
+
+    def print(self):
+        if self.root is None:
+            return
+        self.root.print()
 
     def insert(self, key):
         # Обычная вставка
