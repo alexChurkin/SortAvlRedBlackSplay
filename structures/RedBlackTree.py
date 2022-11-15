@@ -19,7 +19,7 @@ class RBNode(object):
         for i in range(0, tabCount):
             print("  ", end='')
 
-        print(root.key, tabCount)
+        print(str(root.key) + (", red" if root.red else ", black"))
         self.__printRec(root.left, tabCount + 1)
         self.__printRec(root.right, tabCount + 1)
 

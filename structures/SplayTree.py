@@ -22,7 +22,7 @@ class SplayNode(object):
         for i in range(0, tabCount):
             print("  ", end='')
 
-        print(root.key, tabCount)
+        print(root.key)
         self.__printRec(root.left, tabCount + 1)
         self.__printRec(root.right, tabCount + 1)
 
